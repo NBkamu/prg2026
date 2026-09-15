@@ -34,17 +34,41 @@ def egyenleg():
 
     print(f"Az egyenleged: {szamla_egyenleg} FT ")
 
+    return szamla_egyenleg
 def utalas(osszeg):
     print("Utalás: ")
+    
+    osszeg += round(hasznalati_dij * 0.05)
+    tranzakciok.append(f"-{osszeg}")
+        
+    if osszeg > egyenleg():
+        print("Nem áll rendelkezésre megelelő összeg")
+    else:
+        tranzakciok.append(f"-{osszeg}")
+        
+    egyenleg()
     
 def penzbetet(osszeg):
     print("Betét: ")
 
+    tranzakciok.append(f"+{osszeg}")
+
+    egyenleg()
+    
 #mennyiseg kor = 0 ÖSSZES TRANZAKCIÓ
 #mennyiseg kor !=0 utolsó mennyiség tranzakció
 def tortenet(darab):
     print("Tranzakciók: ")
     
+    if darab == 0:
+        kezdet = 0
+    else:
+        kezdet = len(tranzakciok)-darab
+    
+    for i in range(kezdet, len(tranzakciok)):    
+        print(f"\t{tranzakciok[i].rstrip()}")
+
+
 
 #MŰKÖDÉS
 #BEJELENTLEZÉS
@@ -108,11 +132,14 @@ while True:
     if valasztas == 1:
         egyenleg()
     elif valasztas == 2:
-        utalas(123)
+        u = int(input("Kivétel vagy utalás összege: "))
+        utalas(u)
     elif valasztas == 3:
-        penzbetet(10000)
+        b = int(input("Betét összege: "))
+        penzbetet(b)
     elif valasztas == 4:
-        tortenet(0)
+        m = int(input("Előzmény mérete (db) Minden: [0]: "))
+        tortenet(m)
     elif valasztas == 9:
         #mentes(adatfajl)
         exit()
