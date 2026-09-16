@@ -1,3 +1,6 @@
+import subprocess
+from colorama import Fore, Back, Style
+
 
 
 
@@ -81,17 +84,19 @@ if pk == pin_kod:
         print("Sikeres belépés!")
         
 while(not jogosult and hibas_belepesszam > 1 ):
-    print("Hibás PIN kód!")
+    print(f"{Fore.RED} Hibás PIN kód!")
     pk = int(input("Add meg a PIN kódodat!: "))
     hibas_belepesszam -=1
     
     if pk == pin_kod:
         jogosult = True
-        print("Sikeres belépés!")
+        print(f"{Fore.GREEN}Sikeres belépés!")
     
 if not jogosult:
-    print("Hibás PIN kód!")
+    print(f"{Fore.RED}Hibás PIN kód!")
 
+
+print(f"{Fore.RESET}", end="")
 adatbeolvasas(adatfajl) 
 
 #Beolvasás, teszt kiírása
@@ -111,7 +116,10 @@ menu = [
 menupontok = [ 1, 2, 3, 4, 9]
 
 while True:
-    print(cim)
+    print(f"{Back.LIGHTCYAN_EX}{cim:30}")
+    
+    print(f"{Fore.LIGHTCYAN_EX}", end="")
+    
     for me in menu:
         print(f"{me}")
 
@@ -126,11 +134,15 @@ while True:
     
     valasztas = int(input("Válassz tevékenységet: "))
 
+    print(f"{Fore.RESET}", end="")
     # "Képernyő törlése"
     print(f"{'\n' * 20}")
 
     if valasztas == 1:
         egyenleg()
+        input(f"Üss egy billenytűt a foly... ")
+        subprocess.run(["cls"], shell=True)
+        
     elif valasztas == 2:
         u = int(input("Kivétel vagy utalás összege: "))
         utalas(u)
@@ -144,4 +156,5 @@ while True:
         #mentes(adatfajl)
         exit()
 
-
+    input(f"Üss egy billenytűt a foly... ")
+    subprocess.run(["cls"], shell=True)
